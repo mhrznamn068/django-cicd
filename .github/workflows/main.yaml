@@ -69,11 +69,13 @@ jobs:
     - name: Scan Django settings for security issues
       id: check
       uses: victoriadrake/django-security-check@master
+      working-directory: ./app
     - id: results
       run: |
         OUTPUT=$(cat output.txt)
         FORMATTED=${OUTPUT//$'\n'/%0A}
         echo ::set-output name=file::**Django Security Check identified issues:** %0A$FORMATTED
+      working-directory: ./app
     - name: Comment with output
       uses: actions/github-script@v3
       with:
@@ -84,6 +86,7 @@ jobs:
             repo: context.repo.repo,
             body: `${{ steps.results.outputs.file }}`
           })
+      working-directory: ./app
 
 
         
