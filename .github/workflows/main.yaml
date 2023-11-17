@@ -12,7 +12,6 @@ jobs:
       POSTGRES_PASSWORD: "demoproject123"
       POSTGRES_DB: "demoproject"
       FAIL_LEVEL: WARNING
-      ENV_TYPE: pipenv
       APP_PATH: app/
       DEP_PATH: app/requirements.txt
 
