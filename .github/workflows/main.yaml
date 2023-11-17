@@ -7,12 +7,18 @@ on:
 jobs:
   ci:
     runs-on: ubuntu-latest
+    env:
+      POSTGRES_USER: "demoproject"
+      POSTGRES_PASSWORD: "demoproject123"
+      POSTGRES_DB: "demoproject"
 
     services:
       postgres:
         image: postgres:15
         env:
-          POSTGRES_PASSWORD: 8E47d53!659ff7
+          POSTGRES_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
+          POSTGRES_USER: ${{ env.POSTGRES_USER }}
+          POSTGRES_DB: ${{ env.POSTGRES_DB }}
         ports:
         - 5432:5432
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
@@ -30,5 +36,18 @@ jobs:
       run: |
         pip install -r requirements.txt
       working-directory: ./app
+
+    - name: Database Migration
+      run: |
+        python manage.py makemigrations
+        python manage.py migrate
+      working-directory: ./app
+      env:
+        SETTINGS_DB_HOST: "localhost"
+        SETTINGS_DB_PORT: 5432
+        SETTINGS_DB_NAME: ${{ env.POSTGRES_DB }}
+        SETTINGS_DB_USER: ${{ env.POSTGRES_USER }}
+        SETTINGS_DB_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
+
 
         
