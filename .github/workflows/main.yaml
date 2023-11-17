@@ -52,7 +52,7 @@ jobs:
     - name: Run Test
       run: |
         python manage.py test
-        sudo chown -R runner:runner /app
+        sudo chown -R runner:runner ./
         python manage.py collectstatic --noinput
         pytest
         pytest --cov
