@@ -2,7 +2,7 @@ name: PostgreSQL Service
 
 on:
   push:
-    branches: [master]
+    branches: [main]
 
 jobs:
   ci:
@@ -18,4 +18,17 @@ jobs:
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
 
     steps:
-    - uses: actions/checkout@v2
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Setup Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.12
+
+    - name: Install requirements
+      run: |
+        pip install -r requirements.txt
+      working-directory: ./app
+
+        
