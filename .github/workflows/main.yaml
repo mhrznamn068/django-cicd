@@ -49,5 +49,19 @@ jobs:
         SETTINGS_DB_USER: ${{ env.POSTGRES_USER }}
         SETTINGS_DB_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
 
+    - name: Run Test
+      run: |
+        python manage.py test
+        python manage.py collectstatic --noinput
+        pytest
+        flake8
+      working-directory: ./app
+      env:
+        SETTINGS_DB_HOST: "localhost"
+        SETTINGS_DB_PORT: 5432
+        SETTINGS_DB_NAME: ${{ env.POSTGRES_DB }}
+        SETTINGS_DB_USER: ${{ env.POSTGRES_USER }}
+        SETTINGS_DB_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
+
 
         
