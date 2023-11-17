@@ -52,7 +52,8 @@ jobs:
     - name: Run Test
       run: |
         python manage.py test
-        sudo python manage.py collectstatic --noinput
+        whoami
+        #python manage.py collectstatic --noinput
         pytest
         flake8
       working-directory: ./app
