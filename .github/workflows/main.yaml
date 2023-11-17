@@ -13,6 +13,7 @@ jobs:
       POSTGRES_DB: "demoproject"
       FAIL_LEVEL: WARNING
       ENV_TYPE: pipenv
+      APP_PATH: app/
 
     services:
       postgres:
@@ -69,7 +70,6 @@ jobs:
     - name: Scan Django settings for security issues
       id: check
       uses: victoriadrake/django-security-check@master
-      working-directory: ./app
     - id: results
       run: |
         OUTPUT=$(cat output.txt)
@@ -86,7 +86,6 @@ jobs:
             repo: context.repo.repo,
             body: `${{ steps.results.outputs.file }}`
           })
-      working-directory: ./app
 
 
         
