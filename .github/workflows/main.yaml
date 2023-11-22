@@ -2,19 +2,23 @@ name: Django CI
 
 on:
   push:
-    branches: [main]
+    branches: [main, ci]
 
 jobs:
   ci:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version:
+          - "3.12"
     env:
       POSTGRES_USER: "demoproject"
       POSTGRES_PASSWORD: "demoproject123"
       POSTGRES_DB: "demoproject"
-      FAIL_LEVEL: WARNING
+      FAIL_LEVEL: ERROR
       ENV_TYPE: venv
-      APP_PATH: app/
-      DEP_PATH: app/requirements.txt
+      APP_PATH: ./app
+      DEP_PATH: requirements.txt
 
     services:
       postgres:
@@ -34,18 +38,19 @@ jobs:
     - name: Setup Python ${{ matrix.python-version }}
       uses: actions/setup-python@v2
       with:
-        python-version: 3.12
+        python-version: ${{ matrix.python-version }}
+        cache: "pip"
 
     - name: Install requirements
       run: |
-        pip install -r requirements.txt
-      working-directory: ./app
+        pip install -r ${{ env.DEP_PATH }}
+      working-directory: ${{ env.APP_PATH}}
 
     - name: Database Migration
       run: |
         python manage.py makemigrations
         python manage.py migrate
-      working-directory: ./app
+      working-directory: ${{ env.APP_PATH}}
       env:
         SETTINGS_DB_HOST: "localhost"
         SETTINGS_DB_PORT: 5432
@@ -58,9 +63,10 @@ jobs:
         python manage.py test
         #sudo chown -R runner:runner ./
         #python manage.py collectstatic --noinput
-        pytest --cov
+        coverage run -m pytest -v -s
+        coverage report -m
         flake8
-      working-directory: ./app
+      working-directory: ${{ env.APP_PATH}}
       env:
         SETTINGS_DB_HOST: "localhost"
         SETTINGS_DB_PORT: 5432
@@ -75,18 +81,21 @@ jobs:
       run: |
         OUTPUT=$(cat output.txt)
         FORMATTED=${OUTPUT//$'\n'/%0A}
-        echo ::set-output name=file::**Django Security Check identified issues:** %0A$FORMATTED
-      working-directory: ./app
-    - name: Comment with output
-      uses: actions/github-script@v7
-      with:
-        script: |
-          github.rest.issues.createComment({
-            issue_number: context.issue.number,
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            body: `${{ steps.results.outputs.file }}`
-          })
+        # set-output is deprecated. Visit: https://github.blog/changelog/2022-10-11-github-actions-deprecating-save-state-and-set-output-commands/
+        # echo ::set-output name=file::**Django Security Check identified issues:** %0A$FORMATTED
+        echo "file=**Django Security Check identified issues:** %0A$FORMATTED" >> $GITHUB_OUTPUT
+      working-directory: ${{ env.APP_PATH}}
+
+    # This fails as no issues are linked
+    # - name: Comment with output
+    #   uses: actions/github-script@v7
+    #   with:
+    #     script: |
+    #       github.rest.issues.createComment({
+    #         issue_number: context.issue.number,
+    #         owner: context.repo.owner,
+    #         repo: context.repo.repo,
+    #         body: `${{ steps.results.outputs.file }}`
+    #       })
 
 
-        
