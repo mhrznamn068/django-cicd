@@ -18,7 +18,7 @@ jobs:
       FAIL_LEVEL: ERROR
       ENV_TYPE: venv
       APP_PATH: ./app
-      DEP_PATH: requirements.txt
+      DEP_PATH: ./app/requirements.txt
 
     services:
       postgres:
@@ -43,8 +43,8 @@ jobs:
 
     - name: Install requirements
       run: |
+        pip install --upgrade pip
         pip install -r ${{ env.DEP_PATH }}
-      working-directory: ${{ env.APP_PATH}}
 
     - name: Database Migration
       run: |
