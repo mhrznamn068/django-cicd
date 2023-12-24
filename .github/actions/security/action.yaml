@@ -39,22 +39,22 @@ runs:
         pip install -r ${{ inputs.PYTHON_DEP_PATH }}
       shell: bash
 
-    - name: Run Snyk to check for vulnerabilities
-      uses: snyk/actions/python-3.10@master
-      #continue-on-error: true
-      env:
-        SNYK_TOKEN: ${{ inputs.SNYK_TOKEN }}   
-      with:
-        command: test
-        args: --command=python3 --file=${{ inputs.PYTHON_DEP_PATH }} --project-name=${{ inputs.PROJECT_NAME }} --sarif-file-output=snyk.sarif
-
     #- name: Run Snyk to check for vulnerabilities
-    #  run: |
-    #    wget https://static.snyk.io/cli/latest/snyk-linux && mv ./snyk-linux ./snyk chmod +x ./snyk
-    #    snyk auth ${{ inputs.SNYK_TOKEN }}
-    #    snyk test --command=python3 --sarif-file-output=snyk.sarif
-    #  work-directory: ${{ inputs.PROJECT_APP_PATH }}
-    #  shell: bash
+    #  uses: snyk/actions/python-3.10@master
+    #  #continue-on-error: true
+    #  env:
+    #    SNYK_TOKEN: ${{ inputs.SNYK_TOKEN }}   
+    #  with:
+    #    command: test
+    #    args: --command=python3 --file=${{ inputs.PYTHON_DEP_PATH }} --project-name=${{ inputs.PROJECT_NAME }} --sarif-file-output=snyk.sarif
+
+    - name: Run Snyk to check for vulnerabilities
+      run: |
+        wget https://static.snyk.io/cli/latest/snyk-linux && mv ./snyk-linux ./snyk chmod +x ./snyk
+        snyk auth ${{ inputs.SNYK_TOKEN }}
+        snyk test --command=python3 --project-name=${{ inputs.PROJECT_NAME }} --sarif-file-output=snyk.sarif
+      work-directory: ${{ inputs.PROJECT_APP_PATH }}
+      shell: bash
        
     - name: Upload result to GitHub Code Scanning
       uses: github/codeql-action/upload-sarif@v2
