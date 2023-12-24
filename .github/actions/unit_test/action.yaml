@@ -70,7 +70,9 @@ runs:
         #sudo chown -R runner:runner ./
         #python manage.py collectstatic --noinput
         coverage run -m pytest -v -s
+        #coverage run manage.py test
         coverage report -m
+        coverage xml
         flake8
       working-directory: ${{ inputs.PROJECT_APP_PATH}}
       env:
