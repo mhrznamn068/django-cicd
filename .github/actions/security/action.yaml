@@ -40,7 +40,7 @@ runs:
       uses: snyk/actions/python-3.10@master
       #continue-on-error: true
       env:
-        SNYK_TOKEN: ${{ inputs.SNYK_TOKEN }}    
+        SNYK_TOKEN: ${{ inputs.SNYK_TOKEN }}   
       with:
         command: monitor
         args: --file=${{ env.DEP_PATH }}
