@@ -60,7 +60,7 @@ jobs:
       uses: snyk/actions/python-3.10@master
       with:
         command: monitor
-        args: --all-projects --file=${{ env.DEP_PATH }}
+        args: --file=${{ env.DEP_PATH }}
       env:
         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
