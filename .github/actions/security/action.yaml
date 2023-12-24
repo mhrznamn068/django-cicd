@@ -46,7 +46,7 @@ runs:
         SNYK_TOKEN: ${{ inputs.SNYK_TOKEN }}   
       with:
         command: test
-        args: --command=python3 --packages-folder ${{ inputs.PROJECT_APP_PATH }} --project-name=${{ inputs.PROJECT_NAME }} --sarif-file-output=snyk.sarif
+        args: --command=python3 --packages-folder ${{ inputs.PROJECT_APP_PATH }} --project-name=${{ inputs.PROJECT_NAME }} --sarif-file-output=snyk.sarif --packages-folder /opt/hostedtoolcache/Python/3.10.13/x64/lib/python3.10/site-packages
 
     - name: Upload result to GitHub Code Scanning
       uses: github/codeql-action/upload-sarif@v2
