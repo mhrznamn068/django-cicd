@@ -1,6 +1,9 @@
 name: Unit Testing
 description: Unit Testing
 inputs:
+  PROJECT_NAME:
+    description: Project Name
+    required: true
   #PYTHON-VERSION:
   #  description: Python Version
   #  required: true

@@ -1,6 +1,9 @@
 name: Software Composition Analysis with Snyk
 description: Run Software Composition Analysis with Snyk
 inputs:
+  PROJECT_NAME:
+    description: Project Name
+    required: true
   SNYK_TOKEN:
     description: Snyk API Token
     required: true
@@ -43,4 +46,4 @@ runs:
         SNYK_TOKEN: ${{ inputs.SNYK_TOKEN }}   
       with:
         command: monitor
-        args: --file=${{ inputs.PYTHON_DEP_PATH }} --packages-folder ${{ inputs.PROJECT_APP_PATH }} --project-name=${{ github.github_repository }}
+        args: --file=${{ inputs.PYTHON_DEP_PATH }} --packages-folder ${{ inputs.PROJECT_APP_PATH }} --project-name=${{ inputs.PROJECT_NAME }}
