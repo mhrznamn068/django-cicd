@@ -1,8 +1,8 @@
-name: Software Composition Analysis with Synk
-description: Run Software Composition Analysis with Synk
+name: Software Composition Analysis with Snyk
+description: Run Software Composition Analysis with Snyk
 inputs:
   SNYK_TOKEN:
-    description: Synk API Token
+    description: Snyk API Token
     required: true
     default:  ""
   PYTHON_VERSION:
