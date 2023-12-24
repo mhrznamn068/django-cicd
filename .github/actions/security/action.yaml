@@ -37,10 +37,10 @@ runs:
       shell: bash
 
     - name: Run Snyk to check for vulnerabilities
-      uses: snyk/actions/python-${{ inputs.PYTHON_DEP_PATH }}@master
+      uses: snyk/actions/python@master
       #continue-on-error: true
       env:
         SNYK_TOKEN: ${{ inputs.SNYK_TOKEN }}   
       with:
         command: monitor
-        args: --file=${{ env.DEP_PATH }}
+        args: --python${{ inputs.PYTHON_VERSION}} --file=${{ env.DEP_PATH }}
