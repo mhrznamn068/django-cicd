@@ -46,4 +46,4 @@ runs:
         SNYK_TOKEN: ${{ inputs.SNYK_TOKEN }}   
       with:
         command: monitor
-        args: --file=${{ inputs.PYTHON_DEP_PATH }} --packages-folder ${{ inputs.PROJECT_APP_PATH }} --project-name=${{ inputs.PROJECT_NAME }}
+        args: --packages-folder ${{ inputs.PROJECT_APP_PATH }} --project-name=${{ inputs.PROJECT_NAME }}
