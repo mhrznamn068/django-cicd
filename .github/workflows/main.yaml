@@ -23,32 +23,32 @@ jobs:
       APP_PATH: ./app
       DEP_PATH: ./app/requirements.txt
 
-    #services:
-    #  postgres:
-    #    image: postgres:15
-    #    env:
-    #      POSTGRES_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
-    #      POSTGRES_USER: ${{ env.POSTGRES_USER }}
-    #      POSTGRES_DB: ${{ env.POSTGRES_DB }}
-    #    ports:
-    #    - 5432:5432
-    #    options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
+          POSTGRES_USER: ${{ env.POSTGRES_USER }}
+          POSTGRES_DB: ${{ env.POSTGRES_DB }}
+        ports:
+        - 5432:5432
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
 
     steps:
     - name: Checkout
       uses: actions/checkout@v3
 
-    #- name: Unit Testing
-    #  uses: ./.github/actions/unit_test
-    #  with:
-    #    PROJECT_NAME: ${{ github.repository }}
-    #    PYTHON_VERSION: ${{ matrix.python-version }}
-    #    PYTHON_DEP_PATH: ${{ env.DEP_PATH }}
-    #    PROJECT_APP_PATH: ${{ env.APP_PATH }}
-    #    SETTINGS_DB_PORT: 5432
-    #    SETTINGS_DB_NAME: ${{ env.POSTGRES_DB }}
-    #    SETTINGS_DB_USER: ${{ env.POSTGRES_USER }}
-    #    SETTINGS_DB_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
+    - name: Unit Testing
+      uses: ./.github/actions/unit_test
+      with:
+        PROJECT_NAME: ${{ github.repository }}
+        PYTHON_VERSION: ${{ matrix.python-version }}
+        PYTHON_DEP_PATH: ${{ env.DEP_PATH }}
+        PROJECT_APP_PATH: ${{ env.APP_PATH }}
+        SETTINGS_DB_PORT: 5432
+        SETTINGS_DB_NAME: ${{ env.POSTGRES_DB }}
+        SETTINGS_DB_USER: ${{ env.POSTGRES_USER }}
+        SETTINGS_DB_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
 
     - name: Security Testing
       uses: ./.github/actions/security
