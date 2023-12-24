@@ -1,0 +1,40 @@
+name: Software Composition Analysis with Synk
+description: Run Software Composition Analysis with Synk
+inputs:
+  SNYK_TOKEN:
+    description: Synk API Token
+    required: true
+    default:  ""
+  PYTHON-VERSION:
+    description: Python Version
+    required: true
+    default: "3.12"
+  PYTHON_DEP_PATH:
+    description: Path for the Python Dependencies file
+    required: true
+    default: "./app/requirements.txt"
+
+runs:
+  using: composite
+  steps:
+    - name: CheckOut Actions
+      uses: actions/checkout@v3
+
+    - name: Setup Python ${{ inputs.PYTHON-VERSION }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ inputs.PYTHON-VERSION }}
+        cache: "pip"
+
+    - name: Install requirements
+      run: |
+        pip install --upgrade pip
+        pip install -r ${{ inputs.PYTHON_DEP_PATH }}
+
+    - name: Run Snyk to check for vulnerabilities
+      uses: snyk/actions/node@master
+      #continue-on-error: true
+      env:
+        SNYK_TOKEN: ${{ inputs.SNYK_TOKEN }}    
+      with:
+        command: monitor

@@ -10,10 +10,10 @@ on:
 jobs:
   ci:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-version:
-          - "3.12"
+    #strategy:
+    #  matrix:
+    #    python-version:
+    #      - "3.12"
     env:
       POSTGRES_USER: "demoproject"
       POSTGRES_PASSWORD: "demoproject123"
@@ -38,67 +38,13 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
 
-    - name: Setup Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v2
+    - name: Unit Testing
+      uses: ./.github/actions/unit_test
       with:
-        python-version: ${{ matrix.python-version }}
-        cache: "pip"
-
-    - name: Install requirements
-      run: |
-        pip install --upgrade pip
-        pip install -r ${{ env.DEP_PATH }}
-
-    - name: Database Migration
-      run: |
-        python manage.py makemigrations
-        python manage.py migrate
-      working-directory: ${{ env.APP_PATH}}
-      env:
-        SETTINGS_DB_HOST: "localhost"
+        PYTHON_DEP_PATH: ${{ env.DEP_PATH }}
+        PROJECT_APP_PATH: ${{ env.APP_PATH }}
         SETTINGS_DB_PORT: 5432
         SETTINGS_DB_NAME: ${{ env.POSTGRES_DB }}
         SETTINGS_DB_USER: ${{ env.POSTGRES_USER }}
         SETTINGS_DB_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
-
-    - name: Run Test
-      run: |
-        python manage.py test
-        #sudo chown -R runner:runner ./
-        #python manage.py collectstatic --noinput
-        coverage run -m pytest -v -s
-        coverage report -m
-        flake8
-      working-directory: ${{ env.APP_PATH}}
-      env:
-        SETTINGS_DB_HOST: "localhost"
-        SETTINGS_DB_PORT: 5432
-        SETTINGS_DB_NAME: ${{ env.POSTGRES_DB }}
-        SETTINGS_DB_USER: ${{ env.POSTGRES_USER }}
-        SETTINGS_DB_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
-
-    - name: Scan Django settings for security issues
-      id: check
-      uses: victoriadrake/django-security-check@master
-    - id: results
-      run: |
-        OUTPUT=$(cat output.txt)
-        FORMATTED=${OUTPUT//$'\n'/%0A}
-        # set-output is deprecated. Visit: https://github.blog/changelog/2022-10-11-github-actions-deprecating-save-state-and-set-output-commands/
-        # echo ::set-output name=file::**Django Security Check identified issues:** %0A$FORMATTED
-        echo "file=**Django Security Check identified issues:** %0A$FORMATTED" >> $GITHUB_OUTPUT
-      working-directory: ${{ env.APP_PATH}}
-
-    - name: Comment with output
-      if: ${{ github.event_name == 'pull_request' }}
-      uses: actions/github-script@v7
-      with:
-        script: |
-          github.rest.issues.createComment({
-            issue_number: context.issue.number,
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            body: `${{ steps.results.outputs.file }}`
-          })
-
 
