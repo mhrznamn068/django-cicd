@@ -28,7 +28,7 @@ inputs:
 
 matrix:
   python-version:
-    - "3.12"
+    - "3.10"
 runs:
   using: composite
   steps:
