@@ -8,7 +8,7 @@ inputs:
   PYTHON_VERSION:
     description: Python Version
     required: true
-    default: "3.12"
+    default: "3.10"
   PYTHON_DEP_PATH:
     description: Path for the Python Dependencies file
     required: true
@@ -37,7 +37,7 @@ runs:
       shell: bash
 
     - name: Run Snyk to check for vulnerabilities
-      uses: snyk/actions/python-3.10@master
+      uses: snyk/actions/python-${{ inputs.PYTHON_DEP_PATH }}@master
       #continue-on-error: true
       env:
         SNYK_TOKEN: ${{ inputs.SNYK_TOKEN }}   

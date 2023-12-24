@@ -13,7 +13,7 @@ jobs:
     strategy:
       matrix:
         python-version:
-          - "3.12"
+          - "3.10"
     env:
       POSTGRES_USER: "demoproject"
       POSTGRES_PASSWORD: "demoproject123"
@@ -41,6 +41,7 @@ jobs:
     - name: Unit Testing
       uses: ./.github/actions/unit_test
       with:
+        PYTHON_VERSION: ${{ matrix.python-version }}
         PYTHON_DEP_PATH: ${{ env.DEP_PATH }}
         PROJECT_APP_PATH: ${{ env.APP_PATH }}
         SETTINGS_DB_PORT: 5432

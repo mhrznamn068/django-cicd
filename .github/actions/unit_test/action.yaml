@@ -13,6 +13,10 @@ inputs:
     description: Application Project Root Path
     required: true
     default: "./app"
+  PYTHON_VERSION:
+    description: Python Version
+    required: true
+    default: "3.10"
   SETTINGS_DB_PORT:
     description: Database Port
     required: true
@@ -26,19 +30,16 @@ inputs:
     description: Database password
     required: true
 
-matrix:
-  python-version:
-    - "3.10"
 runs:
   using: composite
   steps:
     - name: CheckOut Actions
       uses: actions/checkout@v3
 
-    - name: Setup Python ${{ matrix.python-version }}
+    - name: Setup Python ${{ inputs.PYTHON_VERSION }}
       uses: actions/setup-python@v4
       with:
-        python-version: ${{ matrix.python-version }}
+        python-version: ${{ inputs.PYTHON_VERSION }}
         cache: "pip"
 
     - name: Install requirements
