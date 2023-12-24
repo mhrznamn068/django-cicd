@@ -43,4 +43,4 @@ runs:
         SNYK_TOKEN: ${{ inputs.SNYK_TOKEN }}    
       with:
         command: monitor
-      working_directory: ${{ inputs.PROJECT_APP_PATH }}
+      working-directory: ${{ inputs.PROJECT_APP_PATH }}
