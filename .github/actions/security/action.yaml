@@ -13,6 +13,10 @@ inputs:
     description: Path for the Python Dependencies file
     required: true
     default: "./app/requirements.txt"
+  PROJECT_APP_PATH:
+    description: Application Project Root Path
+    required: true
+    default: "./app"
 
 runs:
   using: composite
@@ -39,3 +43,4 @@ runs:
         SNYK_TOKEN: ${{ inputs.SNYK_TOKEN }}    
       with:
         command: monitor
+      working_directory: ${{ inputs.PROJECT_APP_PATH }}

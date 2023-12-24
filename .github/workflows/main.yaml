@@ -54,4 +54,5 @@ jobs:
         SNYK_TOKEN: ${{ secrets.SYNK_TOKEN }}
         PYTHON_VERSION: ${{ matrix.python-version }}
         PYTHON_DEP_PATH: ${{ env.DEP_PATH }}
+        PROJECT_APP_PATH: ${{ env.APP_PATH }}
 
