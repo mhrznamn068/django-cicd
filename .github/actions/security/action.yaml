@@ -46,7 +46,7 @@ runs:
         SNYK_TOKEN: ${{ inputs.SNYK_TOKEN }}   
       with:
         command: test
-        args: --command=python3 --project-name=${{ inputs.PROJECT_NAME }} --sarif-file-output=snyk.sarif
+        args: --command=python3 --file=${{ inputs.PYTHON_DEP_PATH }} --project-name=${{ inputs.PROJECT_NAME }} --sarif-file-output=snyk.sarif
 
     #- name: Run Snyk to check for vulnerabilities
     #  run: |
