@@ -2,10 +2,10 @@ name: Django CI
 
 on:
   push:
-    branches: [main]
+    branches: [django-cms-snyk]
 
   pull_request:
-    branches: [main]
+    branches: [django-cms-snyk]
 
 jobs:
   ci:
