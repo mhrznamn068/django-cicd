@@ -63,5 +63,4 @@ jobs:
         args: --all-projects
       env:
         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-      working-directory: ${{ env.APP_PATH }}
 
