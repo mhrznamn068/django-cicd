@@ -46,7 +46,7 @@ runs:
         SNYK_TOKEN: ${{ inputs.SNYK_TOKEN }}   
       with:
         command: test
-        args: --command=python3 --sarif-file-output=snyk.sarif --packages-folder /opt/hostedtoolcache/Python/3.10.13/x64/lib/python3.10/site-packages
+        args: --command=python3 --project-name=${{ inputs.PROJECT_NAME }} --sarif-file-output=snyk.sarif
 
     #- name: Run Snyk to check for vulnerabilities
     #  run: |
