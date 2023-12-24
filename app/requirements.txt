@@ -18,4 +18,4 @@ wheel==0.41.3
 python-decouple==3.8
 # added for Snyk scan test
 django-cms==3.4.5
-Django==2.0
+Django==1.9

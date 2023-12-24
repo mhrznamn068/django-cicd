@@ -38,4 +38,4 @@ ENTRYPOINT [ "./start.sh" ]
 
 EXPOSE 20001
 
-# RUN wget https://static.snyk.io/cli/latest/snyk-linux && chmod +x ./snyk-linux
+RUN wget -q https://static.snyk.io/cli/latest/snyk-linux && mv ./snyk-linux ./snyk && chmod +x ./snyk
