@@ -30,6 +30,7 @@ runs:
       run: |
         pip install --upgrade pip
         pip install -r ${{ inputs.PYTHON_DEP_PATH }}
+      shell: bash
 
     - name: Run Snyk to check for vulnerabilities
       uses: snyk/actions/node@master
