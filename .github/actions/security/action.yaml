@@ -5,7 +5,7 @@ inputs:
     description: Synk API Token
     required: true
     default:  ""
-  PYTHON-VERSION:
+  PYTHON_VERSION:
     description: Python Version
     required: true
     default: "3.12"
@@ -20,10 +20,10 @@ runs:
     - name: CheckOut Actions
       uses: actions/checkout@v3
 
-    - name: Setup Python ${{ inputs.PYTHON-VERSION }}
-      uses: actions/setup-python@v2
+    - name: Setup Python ${{ inputs.PYTHON_VERSION }}
+      uses: actions/setup-python@v4
       with:
-        python-version: ${{ inputs.PYTHON-VERSION }}
+        python-version: ${{ inputs.PYTHON_VERSION }}
         cache: "pip"
 
     - name: Install requirements

@@ -10,10 +10,10 @@ on:
 jobs:
   ci:
     runs-on: ubuntu-latest
-    #strategy:
-    #  matrix:
-    #    python-version:
-    #      - "3.12"
+    strategy:
+      matrix:
+        python-version:
+          - "3.12"
     env:
       POSTGRES_USER: "demoproject"
       POSTGRES_PASSWORD: "demoproject123"
@@ -47,4 +47,11 @@ jobs:
         SETTINGS_DB_NAME: ${{ env.POSTGRES_DB }}
         SETTINGS_DB_USER: ${{ env.POSTGRES_USER }}
         SETTINGS_DB_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
+
+    - name: Security Testing
+      uses: ./.github/actions/security
+      with:
+        SNYK_TOKEN: ${{ secrets.SYNK_TOKEN }}
+        PYTHON_VERSION: ${{ matrix.python-version }}
+        PYTHON_DEP_PATH: ${{ env.DEP_PATH }}
 
