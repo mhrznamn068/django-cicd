@@ -44,14 +44,14 @@ runs:
     - name: Install requirements
       run: |
         pip install --upgrade pip
-        pip install -r ${{ inputs.DEP_PATH }}
+        pip install -r ${{ inputs.PYTHON_DEP_PATH }}
       shell: bash
 
     - name: Database Migration
       run: |
         python manage.py makemigrations
         python manage.py migrate
-      working-directory: ${{ inputs.APP_PATH}}
+      working-directory: ${{ inputs.PROJECT_APP_PATH}}
       env:
         SETTINGS_DB_HOST: "localhost"
         SETTINGS_DB_PORT: ${{ inputs.SETTINGS_DB_PORT }}
