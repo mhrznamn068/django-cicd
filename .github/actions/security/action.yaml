@@ -43,4 +43,4 @@ runs:
         SNYK_TOKEN: ${{ inputs.SNYK_TOKEN }}   
       with:
         command: monitor
-        args: --file=${{ env.DEP_PATH }}
+        args: --file=${{ inputs.PYTHON_DEP_PATH }} --packages-folder ${{ inputs.PROJECT_APP_PATH }} --project-name=${{ github.github_repository }}
