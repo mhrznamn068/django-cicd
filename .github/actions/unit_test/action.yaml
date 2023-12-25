@@ -82,3 +82,9 @@ runs:
         SETTINGS_DB_USER: ${{ inputs.SETTINGS_DB_USER }}
         SETTINGS_DB_PASSWORD: ${{ inputs.SETTINGS_DB_PASSWORD }}
       shell: bash
+
+    - name: Pytest coverage comment
+      uses: MishaKav/pytest-coverage-comment@main
+      with:
+        pytest-xml-coverage-path: ./coverage.xml
+      working-directory: ${{ inputs.PROJECT_APP_PATH}}
