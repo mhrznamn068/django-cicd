@@ -4,10 +4,6 @@ inputs:
   PROJECT_NAME:
     description: Project Name
     required: true
-  #PYTHON-VERSION:
-  #  description: Python Version
-  #  required: true
-  #  default: "3.12"
   PYTHON_DEP_PATH:
     description: Path for the Python Dependencies file
     required: true
