@@ -86,5 +86,4 @@ runs:
     - name: Pytest coverage comment
       uses: MishaKav/pytest-coverage-comment@main
       with:
-        pytest-xml-coverage-path: ./coverage.xml
-      working-directory: ${{ inputs.PROJECT_APP_PATH}}
+        pytest-xml-coverage-path: ${{ inputs.PROJECT_APP_PATH}}/coverage.xml
