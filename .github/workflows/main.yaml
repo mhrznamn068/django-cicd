@@ -44,7 +44,7 @@ jobs:
 
     - name: Unit Testing
       #uses: ./.github/actions/unit_test
-      uses: mhrznamn068/github-actions/.github/actions/unit-testing@master
+      uses: mhrznamn068/github-actions/.github/actions/unit-testing/python@master
       with:
         PROJECT_NAME: ${{ github.repository }}
         PYTHON_VERSION: ${{ matrix.python-version }}
@@ -56,7 +56,8 @@ jobs:
         SETTINGS_DB_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
 
     - name: Security Testing
-      uses: ./.github/actions/security
+      #uses: ./.github/actions/security
+      uses: mhrznamn068/github-actions/.github/actions/security@master
       with:
         PROJECT_NAME: "django-cicd"
         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
