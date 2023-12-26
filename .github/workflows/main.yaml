@@ -86,5 +86,3 @@ jobs:
         VAULT_TOKEN: ""
         SONARQUBE_HOST: "http://localhost:9000"
         SONARQUBE_TOKEN: ${{ env.SONARQUBE_TOKEN }}
-
-
