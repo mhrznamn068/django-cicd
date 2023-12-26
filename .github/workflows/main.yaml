@@ -88,4 +88,4 @@ jobs:
         VAULT_TOKEN: ""
         SONARQUBE_HOST: "http://localhost:9000"
         SONARQUBE_TOKEN: ${{ env.SONARQUBE_TOKEN }}
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ github.token }}
