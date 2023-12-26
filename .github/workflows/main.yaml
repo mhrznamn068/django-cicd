@@ -62,7 +62,7 @@ jobs:
         SETTINGS_DB_USER: ${{ env.POSTGRES_USER }}
         SETTINGS_DB_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
 
-    - name: Security Testing
+    - name: Software Composition Analysis
       #uses: ./.github/actions/security
       uses: mhrznamn068/github-actions/.github/actions/security/snyk-sca@master
       with:
@@ -78,7 +78,7 @@ jobs:
           -u admin:admin http://localhost:9000/api/user_tokens/generate | jq -r .token)
         echo "SONARQUBE_TOKEN=$SONARQUBE_TOKEN" >> $GITHUB_ENV
 
-    - name: SAST
+    - name: Static Application Security Testing
       uses: mhrznamn068/github-actions/.github/actions/security/sast@master
       with:
         PROJECT_NAME: "django-cicd"
@@ -88,3 +88,4 @@ jobs:
         VAULT_TOKEN: ""
         SONARQUBE_HOST: "http://localhost:9000"
         SONARQUBE_TOKEN: ${{ env.SONARQUBE_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
