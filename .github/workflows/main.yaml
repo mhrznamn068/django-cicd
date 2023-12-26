@@ -43,7 +43,8 @@ jobs:
       uses: actions/checkout@v3
 
     - name: Unit Testing
-      uses: ./.github/actions/unit_test
+      #uses: ./.github/actions/unit_test
+      uses: mhrznamn068/github-actions/.github/actions/unit-testing@master
       with:
         PROJECT_NAME: ${{ github.repository }}
         PYTHON_VERSION: ${{ matrix.python-version }}

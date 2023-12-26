@@ -4,3 +4,11 @@ db.sqlite3
 __pycache__
 *.pyc
 .coverage
+
+#sonarqube
+.sonarqube
+.helpers/sonarqube/data
+.helpers/sonarqube/extensions
+.helpers/sonarqube/conf
+.helpers/sonarqube/logs
+pg_data
