@@ -17,7 +17,7 @@ jobs:
       pull-requests: write
     strategy:
       matrix:
-        python-version: ["3.10", "3.12"]
+        python-version: ["3.12"]
     env:
       POSTGRES_USER: "demoproject"
       POSTGRES_PASSWORD: "demoproject123"
@@ -38,6 +38,11 @@ jobs:
         - 5432:5432
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
 
+      sonarqube:
+        image: sonarqube:9.9.3-community
+        ports:
+          - 9000:9000
+
     steps:
     - name: Checkout
       uses: actions/checkout@v3
@@ -57,7 +62,7 @@ jobs:
 
     - name: Security Testing
       #uses: ./.github/actions/security
-      uses: mhrznamn068/github-actions/.github/actions/security@master
+      uses: mhrznamn068/github-actions/.github/actions/security/snyk-sca@master
       with:
         PROJECT_NAME: "django-cicd"
         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
@@ -65,5 +70,21 @@ jobs:
         PYTHON_DEP_PATH: ${{ env.DEP_PATH }}
         PROJECT_APP_PATH: ${{ env.APP_PATH }}
 
+    - name: Generate Sonarqube Token
+      run: |
+        SONARQUBE_TOKEN=$(curl -s -X POST -H "Content-Type: application/x-www-form-urlencoded" -d "name=admin" \
+          -u admin:admin http://localhost:9000/api/user_tokens/generate | jq -r .token)
+        echo "SONARQUBE_TOKEN=$SONARQUBE_TOKEN" >> $GITHUB_ENV
+
+    - name: SAST
+      uses: mhrznamn068/github-actions/.github/actions/security/sast@master
+      with:
+        PROJECT_NAME: "django-cicd"
+        VAULT_ENABLED: false
+        VAULT_SERVER: "http://localhost"
+        VAULT_SECRETS_PATH: "app/django-cicd"
+        VAULT_TOKEN: ""
+        SONARQUBE_HOST: "http://localhost:9000"
+        SONARQUBE_TOKEN: ${{ env.SONARQUBE_TOKEN }}
 
 
